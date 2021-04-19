@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{43B4E111-BE27-440E-BB3C-603D0F6ADF89}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ExcelProject</RootNamespace>
+    <AssemblyName>CORP.IT.ProjectManager.ExcelProject</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EPPlus">
+      <HintPath>.\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="SourceCode.EnvironmentSettings.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\K2 blackpearl\Bin\SourceCode.EnvironmentSettings.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="SourceCode.HostClientAPI, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\K2 blackpearl\Host Server\Bin\SourceCode.HostClientAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="SourceCode.SmartObjects.Client, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\K2 blackpearl\Host Server\Bin\SourceCode.SmartObjects.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="SourceCode.SmartObjects.Services.Management, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\K2 blackpearl\Bin\SourceCode.SmartObjects.Services.Management.dll</HintPath>
+    </Reference>
+    <Reference Include="SourceCode.SmartObjects.Services.ServiceSDK, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\Program Files (x86)\K2 blackpearl\Host Server\Bin\SourceCode.SmartObjects.Services.ServiceSDK.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Helpers\CellsDictionaryElement.cs" />
+    <Compile Include="Helpers\Excel\CellStyleClass\CellStyleClass.cs" />
+    <Compile Include="Helpers\Excel\CellStyleClass\FillRange.cs" />
+    <Compile Include="Helpers\Excel\CellStyleClass\SetCellBorderColorFromCellValuesRGB.cs" />
+    <Compile Include="Helpers\Excel\CellStyleClass\SetPropertiesFromCell.cs" />
+    <Compile Include="Helpers\Excel\CheckExcelPackage.cs" />
+    <Compile Include="Helpers\Excel\GetCellDifference.cs" />
+    <Compile Include="Helpers\Excel\GetExcelColor.cs" />
+    <Compile Include="Helpers\Excel\GetLocationNewMoveCell.cs" />
+    <Compile Include="Helpers\Excel\GetWorksheetColumnIndexByName.cs" />
+    <Compile Include="Helpers\Excel\FillWorksheetEmptyValues.cs" />
+    <Compile Include="Helpers\Excel\CheckExistedCellLocation.cs" />
+    <Compile Include="Helpers\Excel\CopyDataFromAnotherWorkSheet.cs" />
+    <Compile Include="Helpers\Excel\GetExcelWorksheetByName.cs" />
+    <Compile Include="Helpers\Excel\GetCellByValue.cs" />
+    <Compile Include="Helpers\Excel\GetWorksheetError.cs" />
+    <Compile Include="Helpers\Excel\WriteDataTableToWorkSheet.cs" />
+    <Compile Include="Helpers\ProjectIDNumberListClass\GetData.cs" />
+    <Compile Include="Helpers\ProjectIDNumberListClass\GetStringListData.cs" />
+    <Compile Include="Helpers\ProjectIDNumberListClass\ProjectIDNumberListClass.cs" />
+    <Compile Include="Helpers\ProjectIDNumberListClass\ProjectIDNumberClass.cs" />
+    <Compile Include="Helpers\ProjectIDNumberListClass\Refresh.cs" />
+    <Compile Include="Helpers\ReturnClass.cs" />
+    <Compile Include="Helpers\Settings\SettingsGlobal.cs" />
+    <Compile Include="Helpers\Settings\SQLVariablesClass\GetStringListSettings.cs" />
+    <Compile Include="Helpers\SugarDataTable\CopyDataTableByColumnList.cs" />
+    <Compile Include="Helpers\SugarSQLConnection\ExecuteSQLCommand.cs" />
+    <Compile Include="Helpers\SugarSQLConnection\GetSQLConnection.cs" />
+    <Compile Include="Helpers\SugarSQLConnection\GetSQLConnectionStringFromServiceInstance.cs" />
+    <Compile Include="Helpers\SugarSQLConnection\SugarSQLConnection.cs" />
+    <Compile Include="Helpers\Settings\SQLVariablesClass\CheckValues.cs" />
+    <Compile Include="Helpers\Settings\SQLVariablesClass\GetSettings.cs" />
+    <Compile Include="Helpers\Settings\SQLVariablesClass\SetValueByName.cs" />
+    <Compile Include="Helpers\Settings\SQLVariablesClass\SQLVariablesClass.cs" />
+    <Compile Include="Helpers\SugarSQLConnection\OpenInUsing.cs" />
+    <Compile Include="Helpers\Sugar\GetUserMessageAndErrorText.cs" />
+    <Compile Include="Helpers\Sugar\ConvertStringToBool.cs" />
+    <Compile Include="Helpers\Sugar\ConvertDateToFormat.cs" />
+    <Compile Include="Helpers\SugarFile\Copy.cs" />
+    <Compile Include="Helpers\SugarDataTable\CopyColumnNamesIdentity.cs" />
+    <Compile Include="Helpers\SugarDataTable\AddColumn.cs" />
+    <Compile Include="Helpers\SugarDataTable\RemoveRowsAll.cs" />
+    <Compile Include="Helpers\SugarFile\DeleteIfExists.cs" />
+    <Compile Include="Helpers\SugarFile\GetK2Xml.cs" />
+    <Compile Include="Helpers\SugarFile\FindByFirstNamePart.cs" />
+    <Compile Include="Helpers\SugarFile\CreateFromK2Xml.cs" />
+    <Compile Include="Helpers\Sugar\GetDataSetFromXML.cs" />
+    <Compile Include="Helpers\SugarDataTable\GetRowIndex.cs" />
+    <Compile Include="Helpers\SugarFile\GetExtention.cs" />
+    <Compile Include="Helpers\Sugar\NormalizeFolderPath.cs" />
+    <Compile Include="Helpers\Sugar\RemoveStringLastChars.cs" />
+    <Compile Include="Helpers\Settings\VariablesClass\Refresh.cs" />
+    <Compile Include="Helpers\Settings\VariablesClass\VariablesClass.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\Methods\getPeriodName.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\Methods\getProductionCalendar.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\worksheetHidden_2_4_Write.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\worksheetHidden_2_6_Write.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\worksheetHidden_3_0_Write.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\worksheetHidden_3_1_Write.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\worksheetHidden_4_0_Write.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\worksheetHidden_Debug_Write.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\worksheetHidden_2_1_Write.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\worksheetHidden_2_2_Write.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\worksheetHidden_2_5_Write.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\worksheetHidden_2_3_Write.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\Empty.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\workSheetShown_2\writeWorksheetShown_2_1.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\workSheetShown_2\writeWorksheetShown_2_2_Header.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\workSheetShown_2\writeWorksheetShown_2_3.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\workSheetShown_2\writeWorksheetShown_2_3_4.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\workSheetShown_2\writeWorksheetShown_2_5.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\workSheetShown_2\writeWorksheetShown_2_6.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\workSheetShown_2\writeWorksheetShown_2_7.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\workSheetShown_2\writeWorksheetShown_2_Header.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\workSheetShown_3\workSheetShown_3_Write.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\workSheetShown_1_Write.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\workSheetShown_2\workSheetShown_2_Write.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\workSheetShown_3\writeWorksheetShown_3_1.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\workSheetShown_3\writeWorksheetShown_3_Header.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\workSheetShown_3\writeWorksheetShown_3_Label.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Settings\SQLVariablesClass.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Settings\VariablesClass.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Settings\Settings.cs" />
+    <Compile Include="ProjectBriefcaseExcelReport\Execution\GetFromSQLToFile.cs" />
+    <Compile Include="ProjectBudget\Execution\writeSQLProjectBudgetCommon.cs" />
+    <Compile Include="ProjectBudget\Execution\getXMLDataFromFile.cs" />
+    <Compile Include="ProjectBudget\Execution\getXMLDataFromFileFull.cs" />
+    <Compile Include="ProjectBudget\Execution\projectBudgetFullGetRowType.cs" />
+    <Compile Include="ProjectBudget\Execution\ReadFromFileToSQLTable.cs" />
+    <Compile Include="ProjectBudget\Execution\writeSQLProjectBudgetFull.cs" />
+    <Compile Include="ProjectBudget\Settings\Settings.cs" />
+    <Compile Include="ProjectBudget\Settings\SQLVariablesClass.cs" />
+    <Compile Include="ProjectFinModel\Date.cs" />
+    <Compile Include="ProjectFinModel\Execution\private\writeWorksheet.cs" />
+    <Compile Include="ProjectFinModel\Execution\private\deleteJunkDataTableReport.cs" />
+    <Compile Include="ProjectFinModel\Execution\private\getRowResourse.cs" />
+    <Compile Include="ProjectFinModel\Execution\private\fillDepartmentBlock.cs" />
+    <Compile Include="ProjectFinModel\Execution\private\writeExcel.cs" />
+    <Compile Include="ProjectFinModel\Execution\private\getReportProjectResourceIntensityDataTable.cs" />
+    <Compile Include="ProjectFinModel\Execution\WriteFromSQLToFileSingle.cs" />
+    <Compile Include="ProjectFinModel\Settings\SQLVariablesClass.cs" />
+    <Compile Include="ProjectFinModel\Settings\VariablesClass.cs" />
+    <Compile Include="ProjectFinModel\YearQuarter.cs" />
+    <Compile Include="ProjectFinModel\Settings\Settings.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\GetFromSQLToFile.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\worksheetMainData\worksheetMainData_BudgetFull_Write.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\worksheetMainData\worksheetMainData_BudgetGeneral_Write.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\worksheetMainData\worksheetMainData_Lessons_Write.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\worksheetMainData\worksheetMainData_Risks_Write.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\worksheetMainData\worksheetMainData_KPIDynamic_Ratings_Write.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\worksheetMainData\worksheetMainData_KPIDynamic_Comment_Write.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\worksheetMainData\worksheetMainData_KPIDynamic_Write.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\worksheetMainData\worksheetMainData_KPIWaterfall_Comment_Write.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\worksheetMainData\worksheetMainData_KPIWaterfall_Ratings_Write.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\worksheetMainData\worksheetMainData_KPIWaterfall_Write.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\Methods\getFileShortNameNew.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\Methods\getProductionCalendarData.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\worksheetMainData\worksheetMainData_Project_Write.cs" />
+    <Compile Include="ProjectQuarteryReport\Execution\worksheetMainData\writeWorksheetMainData.cs" />
+    <Compile Include="ProjectQuarteryReport\Settings\Settings.cs" />
+    <Compile Include="ProjectQuarteryReport\Settings\SQLVariablesClass.cs" />
+    <Compile Include="ProjectQuarteryReport\Settings\VariablesClass.cs" />
+    <Compile Include="SmartObjects.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
