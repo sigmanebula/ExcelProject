@@ -1,0 +1,14 @@
+D:\temp\copyProj\CORP.IT.ProjectManager\CORP.IT.ProjectManager.ExcelProject\bin\Debug\CORP.IT.ProjectManager.ExcelProject.dll
+D:\temp\copyProj\CORP.IT.ProjectManager\CORP.IT.ProjectManager.ExcelProject\bin\Debug\CORP.IT.ProjectManager.ExcelProject.pdb
+D:\temp\copyProj\CORP.IT.ProjectManager\CORP.IT.ProjectManager.ExcelProject\bin\Debug\EPPlus.dll
+D:\temp\copyProj\CORP.IT.ProjectManager\CORP.IT.ProjectManager.ExcelProject\bin\Debug\SourceCode.EnvironmentSettings.Client.dll
+D:\temp\copyProj\CORP.IT.ProjectManager\CORP.IT.ProjectManager.ExcelProject\bin\Debug\SourceCode.HostClientAPI.dll
+D:\temp\copyProj\CORP.IT.ProjectManager\CORP.IT.ProjectManager.ExcelProject\bin\Debug\SourceCode.SmartObjects.Client.dll
+D:\temp\copyProj\CORP.IT.ProjectManager\CORP.IT.ProjectManager.ExcelProject\bin\Debug\SourceCode.SmartObjects.Services.Management.dll
+D:\temp\copyProj\CORP.IT.ProjectManager\CORP.IT.ProjectManager.ExcelProject\bin\Debug\SourceCode.SmartObjects.Services.ServiceSDK.dll
+D:\temp\copyProj\CORP.IT.ProjectManager\CORP.IT.ProjectManager.ExcelProject\bin\Debug\SourceCode.Security.UserRoleManager.Client.dll
+D:\temp\copyProj\CORP.IT.ProjectManager\CORP.IT.ProjectManager.ExcelProject\bin\Debug\Microsoft.IdentityModel.dll
+D:\temp\copyProj\CORP.IT.ProjectManager\CORP.IT.ProjectManager.ExcelProject\bin\Debug\SourceCode.Xml.dll
+D:\temp\copyProj\CORP.IT.ProjectManager\CORP.IT.ProjectManager.ExcelProject\obj\Debug\CORP.IT.ProjectManager.ExcelProject.csprojResolveAssemblyReference.cache
+D:\temp\copyProj\CORP.IT.ProjectManager\CORP.IT.ProjectManager.ExcelProject\obj\Debug\CORP.IT.ProjectManager.ExcelProject.dll
+D:\temp\copyProj\CORP.IT.ProjectManager\CORP.IT.ProjectManager.ExcelProject\obj\Debug\CORP.IT.ProjectManager.ExcelProject.pdb
