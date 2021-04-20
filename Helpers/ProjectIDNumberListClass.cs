@@ -1,6 +1,6 @@
 ﻿namespace Helpers
 {
-    public class ProjectIDNumberListClass
+  public class ProjectIDNumberListClass
     {
         public System.Collections.Generic.List<ProjectIDNumberClass> List { get; set; }
         
@@ -29,12 +29,6 @@
         public void Refresh()
         {
             this.List = new System.Collections.Generic.List<ProjectIDNumberClass>();
-        }
-
-        public class ProjectIDNumberClass
-        {
-            public int ProjectID { get; set; }
-            public int ProjectNumber { get; set; }
         }
 
 

@@ -10,8 +10,8 @@ namespace ProjectQuarteryReport
     {
         public static Helpers.ReturnClass GetFromSQLToFile(string projectID, string productionCalendarID)
         {
-            Settings.SQLVariables = new Settings.SQLVariablesClass();
-            Settings.Variables    = new Settings.VariablesClass();
+            Settings.SQLVariables = new SQLVariablesClass();
+            Settings.Variables    = new VariablesClass();
             Settings.Variables.Refresh();
             string errorText = "";
 
@@ -75,8 +75,8 @@ namespace ProjectQuarteryReport
                 string userMessage = Settings.Variables.UserMessage;
                 bool isGetErrorMessage = Helpers.Sugar.ConvertStringToBool(Settings.SQLVariables.IsGetErrorMessage);
 
-                Settings.SQLVariables = new Settings.SQLVariablesClass();
-                Settings.Variables = new Settings.VariablesClass();
+                Settings.SQLVariables = new SQLVariablesClass();
+                Settings.Variables = new VariablesClass();
                 connection.Close();
 
                 GC.Collect();

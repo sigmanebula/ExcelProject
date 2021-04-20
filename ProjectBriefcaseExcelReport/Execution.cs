@@ -922,8 +922,8 @@ namespace ProjectBriefcaseExcelReport
             dateStart = dateStart.Split(' ')[0];
             dateEnd = dateEnd.Split(' ')[0];
 
-            Settings.SQLVariables = new Settings.SQLVariablesClass();
-            Settings.Variables = new Settings.VariablesClass();
+            Settings.SQLVariables = new SQLVariablesClass();
+            Settings.Variables = new VariablesClass();
             Settings.Variables.Refresh();
             string errorText = "";
 
@@ -988,8 +988,8 @@ namespace ProjectBriefcaseExcelReport
                 string userMessage = Settings.Variables.UserMessage;
                 bool isGetErrorMessage = Helpers.Sugar.ConvertStringToBool(Settings.SQLVariables.IsGetErrorMessage);
 
-                Settings.SQLVariables = new Settings.SQLVariablesClass();
-                Settings.Variables = new Settings.VariablesClass();
+                Settings.SQLVariables = new SQLVariablesClass();
+                Settings.Variables = new VariablesClass();
                 connection.Close();
 
                 Helpers.SugarFile.DeleteIfExists(fileFullNameNew, "\nОшибка при удалении временного файла: ", ref errorText);

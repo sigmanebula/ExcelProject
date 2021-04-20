@@ -11,8 +11,8 @@ namespace ProjectFinModel
         public static Helpers.ReturnClass WriteFromSQLToFileSingle(string projectIDList, string fileData)
         {
             projectIDList = Helpers.Sugar.RemoveStringLastChars(projectIDList, ", ");
-            Settings.SQLVariables = new Settings.SQLVariablesClass();
-            Settings.Variables = new Settings.VariablesClass();
+            Settings.SQLVariables = new SQLVariablesClass();
+            Settings.Variables = new VariablesClass();
             Settings.Variables.Refresh();
             string errorText = "";
 
@@ -89,8 +89,8 @@ namespace ProjectFinModel
             string userMessage = Settings.Variables.UserMessage;
             bool isGetErrorMessage = Helpers.Sugar.ConvertStringToBool(Settings.SQLVariables.IsGetErrorMessage);
 
-            Settings.SQLVariables = new Settings.SQLVariablesClass();
-            Settings.Variables = new Settings.VariablesClass();
+            Settings.SQLVariables = new SQLVariablesClass();
+            Settings.Variables = new VariablesClass();
             
             GC.Collect();
             
@@ -312,7 +312,7 @@ namespace ProjectFinModel
             {
                 worksheet.InsertRow(lastNonEmptyRowIndex + 1, 1);
 
-                Helpers.Excel.CellStyleClass cellStyle = new Helpers.Excel.CellStyleClass();
+                Helpers.CellStyleClass cellStyle = new Helpers.CellStyleClass();
                 cellStyle.SetPropertiesFromCell(summaryRow_Cell);
                 cellStyle.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
                 cellStyle.BorderLeftStyle = OfficeOpenXml.Style.ExcelBorderStyle.None;
@@ -358,7 +358,7 @@ namespace ProjectFinModel
         }
 
         static DataTable getReportProjectResourceIntensityDataTable(
-              Helpers.ProjectIDNumberListClass.ProjectIDNumberClass Project
+              Helpers.ProjectIDNumberClass Project
             , SqlConnection connection
             , ref string errorText
             )

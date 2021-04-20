@@ -168,7 +168,7 @@ namespace ProjectBudget
 
         public static void ReadFromFileToSQLTable(string projectIDList)
         {
-            Settings.SQLVariables = new Settings.SQLVariablesClass();
+            Settings.SQLVariables = new SQLVariablesClass();
             string errorText = "";
 
             projectIDList = Helpers.Sugar.RemoveStringLastChars(projectIDList, ", ", ref errorText);
@@ -218,7 +218,7 @@ namespace ProjectBudget
                             }
                         }
 
-                    Settings.SQLVariables = new Settings.SQLVariablesClass();
+                    Settings.SQLVariables = new SQLVariablesClass();
 
                     connection.Close();
                 }
