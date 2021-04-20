@@ -5,7 +5,7 @@
         public static Helpers.ProjectIDNumberListClass ProjectIDNumber = new Helpers.ProjectIDNumberListClass();
 
         public static SQLVariablesClass SQLVariables = new SQLVariablesClass();
-        public static ProjectFinModel.VariablesClass Variables = new ProjectFinModel.VariablesClass();
+        public static Helpers.VariablesClass Variables = new Helpers.VariablesClass();
 
         public static string FileExtention = "xlsx";
 

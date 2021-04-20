@@ -13,7 +13,6 @@ namespace ProjectQuarteryReport
             Settings.SQLVariables = new SQLVariablesClass();
             Settings.Variables    = new VariablesClass();
             Settings.Variables.Refresh();
-            string errorText = "";
 
             using (var connection = Helpers.SugarSQLConnection.GetSQLConnection())
             {
@@ -33,18 +32,17 @@ namespace ProjectQuarteryReport
 
                 Helpers.SugarSQLConnection.OpenInUsing(connection);
 
-                Settings.SQLVariables.GetSettings(connection, Settings.SettingsTypeCodeList, ref errorText);
+                Settings.SQLVariables.GetSettings(connection, Settings.SettingsTypeCodeList);
                 
-                getProductionCalendarData(connection, ref errorText);
+                getProductionCalendarData(connection);
 
-                string fileShortNameNew = getFileShortNameNew(connection, ref errorText);
+                string fileShortNameNew = getFileShortNameNew(connection);
 
                 string fileFullNameNew = Settings.SQLVariables.FolderPath + fileShortNameNew;
                 
-                Helpers.SugarFile.Copy(Settings.SQLVariables.FolderPath + Settings.SQLVariables.TemplateFileShortName, fileFullNameNew, ref errorText);
+                Helpers.SugarFile.Copy(Settings.SQLVariables.FolderPath + Settings.SQLVariables.TemplateFileShortName, fileFullNameNew);
                 
-                if (errorText == "")  //основное действие
-                {
+
                     ExcelPackage excelPackage = null;
                     try
                     {
@@ -54,23 +52,23 @@ namespace ProjectQuarteryReport
 
                         var worksheetMainData = Helpers.Excel.GetExcelWorksheetByName(excelPackage, Settings.SQLVariables.WorksheetMainData_Name);
 
-                        writeWorksheetMainData(connection, worksheetMainData, ref errorText);
+                        writeWorksheetMainData(connection, worksheetMainData);
 
                         excelPackage.Save();
                     }
                     catch (Exception ex)
                     {
-                        errorText += "\nОшибка в файле. " + ex.Message;
+                        ex.Message += "\nОшибка в файле. " + ex.Message;
                     }
                     finally
                     {
                         excelPackage.Dispose();
                     }
 
-                    fileData = Helpers.SugarFile.GetK2Xml(fileFullNameNew, fileShortNameNew, "", ref errorText);
-                }
+                    fileData = Helpers.SugarFile.GetK2Xml(fileFullNameNew, fileShortNameNew);
+
                 
-                Helpers.SugarFile.DeleteIfExists(fileFullNameNew, "\nОшибка при удалении временного файла: ", ref errorText);
+                Helpers.SugarFile.DeleteIfExists(fileFullNameNew);
                 
                 string userMessage = Settings.Variables.UserMessage;
                 bool isGetErrorMessage = Helpers.Sugar.ConvertStringToBool(Settings.SQLVariables.IsGetErrorMessage);
@@ -81,7 +79,7 @@ namespace ProjectQuarteryReport
 
                 GC.Collect();
 
-                userMessage = Helpers.Sugar.GetUserMessageAndErrorText(userMessage, errorText, isGetErrorMessage);
+                userMessage = Helpers.Sugar.GetUserMessageAndErrorText(userMessage);
                 
                 return new Helpers.ReturnClass() { FileData = fileData, UserMessage = userMessage };
             }
@@ -116,10 +114,9 @@ namespace ProjectQuarteryReport
                 );
         }
 
-        static void writeWorksheetMainData(SqlConnection connection, ExcelWorksheet worksheet, ref string errorText)
+        static void writeWorksheetMainData(SqlConnection connection, ExcelWorksheet worksheet)
         {
-            if (errorText == "")
-            {
+
                 worksheetMainData_Project_Write(worksheet, connection);
 
                 //Current Waterfall Methodology
@@ -306,7 +303,7 @@ namespace ProjectQuarteryReport
 
                 if (Helpers.Sugar.ConvertStringToBool(Settings.SQLVariables.IsAutoFitColumns))
                     worksheet.Cells.AutoFitColumns();
-            }
+            
         }
 
         static void worksheetMainData_Risks_Write(ExcelWorksheet worksheet, SqlConnection connection)
@@ -737,9 +734,8 @@ namespace ProjectQuarteryReport
                 );
         }
 
-        static void getProductionCalendarData(SqlConnection connection, ref string errorText)
+        static void getProductionCalendarData(SqlConnection connection)
         {
-            if (errorText == "")
                 try
                 {
                     using (var cmd = new SqlCommand())
@@ -758,14 +754,13 @@ namespace ProjectQuarteryReport
                 }
                 catch (Exception ex)
                 {
-                    errorText += "Ошибка: не удалось получить данные по календарю, причина: " + ex.Message;
+                    ex.Message = "Ошибка: не удалось получить данные по календарю, причина: " + ex.Message;
                 }
         }
 
-        static string getFileShortNameNew(SqlConnection connection, ref string errorText)
+        static string getFileShortNameNew(SqlConnection connection)
         {
-            if (errorText == "")
-            {
+
                 try
                 {
                     DataTable dataTable = Helpers.SugarSQLConnection.ExecuteSQLCommand(
@@ -787,12 +782,9 @@ namespace ProjectQuarteryReport
                 }
                 catch (Exception ex)
                 {
-                    errorText += "Ошибка: не удалось получить данные по проекту и календарю, причина: " + ex.Message;
+                    ex.Message += "Ошибка: не удалось получить данные по проекту и календарю, причина: " + ex.Message;
                     return "";
                 }
-            }
-            else
-                return "";
         }
 
 

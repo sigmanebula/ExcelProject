@@ -56,9 +56,8 @@
         }
 
 
-        public void GetData(System.Data.SqlClient.SqlConnection connection, string projectIDList, ref string errorText)
+        public void GetData(System.Data.SqlClient.SqlConnection connection, string projectIDList)
         {
-            if (errorText == "")
                 try
                 {
                     this.List = new System.Collections.Generic.List<ProjectIDNumberClass>();
@@ -83,7 +82,7 @@
                 }
                 catch (System.Exception exception)
                 {
-                    errorText += "\nОшибка: не удалось получить данные, причина: " + exception.Message;
+                    exception.Message = "\nОшибка: не удалось получить данные, причина: " + exception.Message;
                 }
         }
 

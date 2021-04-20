@@ -2,43 +2,10 @@
 {
     public static class Sugar
     {
-        public static string RemoveStringLastChars(string str, string removeChars, ref string errorText)
+       
+        public static string NormalizeFolderPath(string path)
         {
-            if (errorText == "")
-                try
-                {
-                    if (removeChars.Length > 0)
-                        for (int i = 0; i < removeChars.Length && str.Length > 0; i++)
-                            if (str[str.Length - 1] == removeChars[i])
-                            {
-                                str = str.Substring(0, str.Length - 1);
-                                i = -1;
-                            }
-                }
-                catch(System.Exception exception)
-                {
-                    errorText += "\nОшибка форматирования строки: " + str + ", причина: " + exception.Message;
-                }
 
-            return str;
-        }
-        
-        public static string RemoveStringLastChars(string str, string removeChars)
-        {
-            string errorText = "";
-
-            str = RemoveStringLastChars(str, removeChars, ref errorText);
-
-            if (errorText != "")
-                throw new System.Exception(errorText);
-
-            return str;
-        }
-
-        public static string NormalizeFolderPath(string path, ref string errorText)
-        {
-            if (errorText == "")
-            {
                 try
                 {
                     if (path[path.Length - 1] != '\\')
@@ -49,43 +16,25 @@
                 }
                 catch (System.Exception exception)
                 {
-                    errorText += exception.Message;
+                    
                 }
-            }
-            return path;
-        }
-
-        public static string NormalizeFolderPath(string path)
-        {
-            string errorText = "";
-            path = NormalizeFolderPath(path, ref errorText);
-
-            if (errorText != "")
-                throw new System.Exception(errorText);
 
             return path;
         }
 
-        public static string GetUserMessageAndErrorText(string userMessage, string errorText, bool isGetErrorMessage)
+
+        public static string GetUserMessageAndErrorText(string userMessage)
         {
             if (!string.IsNullOrEmpty(userMessage))
                 userMessage = "";
 
-            if (!string.IsNullOrEmpty(errorText))
-            {
-                if (isGetErrorMessage)
-                    userMessage += ((userMessage == "") ? System.Environment.NewLine : "") + errorText;
-                else
-                    throw new System.Exception(errorText);
-            }
             return userMessage;
         }
 
-        public static System.Data.DataSet GetDataSetFromXML(string xml, ref string errorText)
+        public static System.Data.DataSet GetDataSetFromXML(string xml)
         {
             System.Data.DataSet dataSet = new System.Data.DataSet();
 
-            if (errorText == "")
                 try
                 {
                     var stream = new System.IO.MemoryStream();
@@ -99,23 +48,12 @@
                 }
                 catch (System.Exception exception)
                 {
-                    errorText += "Создание датасета из К2 XML. Ошибка: " + exception.Message + System.Environment.NewLine;
+                    exception.Message = "Создание датасета из К2 XML. Ошибка: " + exception.Message + System.Environment.NewLine;
                 }
 
             return dataSet;
         }
 
-        public static System.Data.DataSet GetDataSetFromXML(string xml)
-        {
-            string errorText = "";
-
-            System.Data.DataSet dataSet = GetDataSetFromXML(xml, ref errorText);
-
-            if (errorText != "")
-                throw new System.Exception(errorText);
-
-            return dataSet;
-        }
 
         public static bool ConvertStringToBool(string word, bool isExceptionIfNotInCase)
         {

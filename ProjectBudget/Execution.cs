@@ -9,7 +9,7 @@ namespace ProjectBudget
 {
     public static class Execution
     {
-        static string getXMLDataFromFile(string filePath, int projectNumber, ref string errorText)
+        static string getXMLDataFromFile(string filePath, int projectNumber)
         {
             string resultXML = "";
             ExcelPackage excelPackage = null;
@@ -17,7 +17,6 @@ namespace ProjectBudget
             var cellsDictionary = new System.Collections.Generic.Dictionary<string, Helpers.CellsDictionaryElement>(); //словарь элементов ячеек
             int id = 0; //заполняем словарь ячеек - переводим таблицу в плоскую структуру
 
-            if (errorText == "")
                 try
                 {
                     var dataSet = Helpers.Sugar.GetDataSetFromXML(Settings.SQLVariables.cells);
@@ -60,7 +59,7 @@ namespace ProjectBudget
                 }
                 catch (Exception exception)
                 {
-                    errorText = "\nОшибка в общей информации бюджета проекта " + projectNumber.ToString() + ": " + exception.Message + Environment.NewLine;
+                    exception.Message = "\nОшибка в общей информации бюджета проекта " + projectNumber.ToString() + ": " + exception.Message + Environment.NewLine;
                 }
                 finally
                 {
@@ -71,12 +70,11 @@ namespace ProjectBudget
             return resultXML;
         }
 
-        static string getXMLDataFromFileFull(int projectID, int projectNumber, string filePath, ref string errorText)
+        static string getXMLDataFromFileFull(int projectID, int projectNumber, string filePath)
         {
             string resultXML = "";
             ExcelPackage excelPackage = null;
 
-            if (errorText == "")
                 try
                 {
                     excelPackage = new ExcelPackage(new FileInfo(filePath));
@@ -130,7 +128,7 @@ namespace ProjectBudget
                 }
                 catch (Exception exception)
                 {
-                    errorText = "\nОшибка в детальной информации бюджета проекта " + projectNumber.ToString() + ": " + exception.Message + Environment.NewLine;
+                    exception.Message = "\nОшибка в детальной информации бюджета проекта " + projectNumber.ToString() + ": " + exception.Message + Environment.NewLine;
                 }
                 finally
                 {
@@ -169,35 +167,26 @@ namespace ProjectBudget
         public static void ReadFromFileToSQLTable(string projectIDList)
         {
             Settings.SQLVariables = new SQLVariablesClass();
-            string errorText = "";
 
-            projectIDList = Helpers.Sugar.RemoveStringLastChars(projectIDList, ", ", ref errorText);
+            projectIDList = projectIDList.TrimEnd(new char[] {',',' '});
 
-            errorText = readFromFileToSQLTableUseConnection(projectIDList, errorText);
+            var empty = readFromFileToSQLTableUseConnection(projectIDList);
 
             GC.Collect();
 
-            if (!string.IsNullOrEmpty(errorText))
-            {
-                //System.IO.File.WriteAllText(@"D:\VSProject\errorText.txt", errorText);
-                throw new System.Exception(errorText);
-            }
-
-
         }
 
-        static string readFromFileToSQLTableUseConnection(string projectIDList, string errorText)
+        static string readFromFileToSQLTableUseConnection(string projectIDList)
         {
-            if (errorText == "")
+
                 using (var connection = Helpers.SugarSQLConnection.GetSQLConnection())
                 {
-                    Helpers.SugarSQLConnection.OpenInUsing(connection, ref errorText);
+                    Helpers.SugarSQLConnection.OpenInUsing(connection);
 
-                    Settings.SQLVariables.GetSettings(connection, Settings.SettingsTypeCodeList, ref errorText); //получаем настройки
+                    Settings.SQLVariables.GetSettings(connection, Settings.SettingsTypeCodeList); //получаем настройки
 
-                    Settings.ProjectIDNumber.GetData(connection, projectIDList, ref errorText);  //получаем все ProjectID\Number проектов из входной строки
+                    Settings.ProjectIDNumber.GetData(connection);  //получаем все ProjectID\Number проектов из входной строки
 
-                    if (errorText == "")
                         foreach (var Project in Settings.ProjectIDNumber.List) //получаем данные и записываем
                         {
                             string filePath = Helpers.SugarFile.FindByFirstNamePart(
@@ -208,13 +197,13 @@ namespace ProjectBudget
 
                             if (filePath != "") //если файл не пустой, то он найден, можно брать инфу
                             {
-                                string xmlBudgetCommon = getXMLDataFromFile(filePath, Project.ProjectNumber, ref errorText); //чтение из файла и упаковка в XML
+                                string xmlBudgetCommon = getXMLDataFromFile(filePath, Project.ProjectNumber); //чтение из файла и упаковка в XML
 
-                                writeSQLProjectBudgetCommon(connection, Project.ProjectID, Project.ProjectNumber, xmlBudgetCommon, ref errorText); //запись общей информации по бюджету в базу
+                                writeSQLProjectBudgetCommon(connection, Project.ProjectID, Project.ProjectNumber, xmlBudgetCommon); //запись общей информации по бюджету в базу
 
-                                string xmlBudgetFull = getXMLDataFromFileFull(Project.ProjectID, Project.ProjectNumber, filePath, ref errorText); //чтение из файла и упаковка в XML
+                                string xmlBudgetFull = getXMLDataFromFileFull(Project.ProjectID, Project.ProjectNumber, filePath); //чтение из файла и упаковка в XML
 
-                                writeSQLProjectBudgetFull(connection, Project.ProjectNumber, xmlBudgetFull, ref errorText); //запись детальной информации по бюджету в базу
+                                writeSQLProjectBudgetFull(connection, Project.ProjectNumber, xmlBudgetFull); //запись детальной информации по бюджету в базу
                             }
                         }
 
@@ -223,12 +212,11 @@ namespace ProjectBudget
                     connection.Close();
                 }
 
-            return errorText;
+            return "";
         }
 
-        static void writeSQLProjectBudgetCommon(SqlConnection connection, int projectID, int projectNumber, string xml, ref string errorText)
+        static void writeSQLProjectBudgetCommon(SqlConnection connection, int projectID, int projectNumber, string xml)
         {
-            if (errorText == "")
                 try
                 {
                     if (xml == "")
@@ -247,13 +235,12 @@ namespace ProjectBudget
                 }
                 catch (Exception exception)
                 {
-                    errorText += "\nОшибка записи общей информации по бюджету проекта " + projectNumber.ToString() + ": " + exception.Message;
+                    exception.Message += "\nОшибка записи общей информации по бюджету проекта " + projectNumber.ToString() + ": " + exception.Message;
                 }
         }
 
-        static void writeSQLProjectBudgetFull(SqlConnection connection, int projectNumber, string xml, ref string errorText)
+        static void writeSQLProjectBudgetFull(SqlConnection connection, int projectNumber, string xml)
         {
-            if (errorText == "")
                 try
                 {
                     if (xml == "")
@@ -271,7 +258,7 @@ namespace ProjectBudget
                 }
                 catch (Exception exception)
                 {
-                    errorText += "\nОшибка записи полной информации по бюджету проекта " + projectNumber.ToString() + ": " + exception.Message;
+                    exception.Message += "\nОшибка записи полной информации по бюджету проекта " + projectNumber.ToString() + ": " + exception.Message;
                 }
         }
 

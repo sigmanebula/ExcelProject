@@ -5,33 +5,23 @@
         const string ConnectionString = "Integrated=True;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;Host=localhost;Port=5555";
         public static int TimeOutSql = 2000;   // Time Out запросов к sql
 
-        public static void OpenInUsing(System.Data.SqlClient.SqlConnection connection, ref string errorText)
+        public static void OpenInUsing(System.Data.SqlClient.SqlConnection connection)
         {
-            if (errorText == "")
                 try
                 {
                     connection.Open();
                 }
                 catch (System.Exception exception)
                 {
-                    errorText +=
+                    exception.Message +=
                         "\nОшибка при открытии подключения к базе данных "
                         + connection.ConnectionString
                         + ", причина: "
                         + exception.Message
                         ;
-                }
+                }                
         }
 
-        public static void OpenInUsing(System.Data.SqlClient.SqlConnection connection)
-        {
-            string errorText = "";
-
-            OpenInUsing(connection, ref errorText);
-
-            if (errorText != "")
-                throw new System.Exception(errorText);
-        }
 
         public static string GetSQLConnectionStringFromServiceInstance()
         {

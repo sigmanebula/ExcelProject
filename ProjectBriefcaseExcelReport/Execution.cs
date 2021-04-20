@@ -8,11 +8,10 @@ namespace ProjectBriefcaseExcelReport
 {
     public static class Execution
     {
-        static string getPeriodName(bool isLowerQuarterWord, ref string errorText)
+        static string getPeriodName(bool isLowerQuarterWord)
         {
             string result = "";
 
-            if (errorText == "")
                 try
                 {
                     string quarterWord = (isLowerQuarterWord) ? " квартал " : " КВАРТАЛ ";
@@ -34,27 +33,14 @@ namespace ProjectBriefcaseExcelReport
                 }
                 catch (Exception ex)
                 {
-                    errorText += "Ошибка получения периода. " + ex.Message;
+                    ex.Message = "Ошибка получения периода. " + ex.Message;
                 }
 
             return result;
         }
         
-        static string getPeriodName(bool isLowerQuarterWord)
+        static void getProductionCalendar(string dateStart, string dateEnd, SqlConnection connection)
         {
-            string errorText = "";
-            string result = getPeriodName(isLowerQuarterWord, ref errorText);
-
-            if (errorText != "")
-                throw new System.Exception(errorText);
-
-            return result;
-        }
-
-
-        static void getProductionCalendar(string dateStart, string dateEnd, SqlConnection connection, ref string errorText)
-        {
-            if (errorText == "")
                 try
                 {
                     using (var cmd = new SqlCommand()) //записываем
@@ -77,7 +63,7 @@ namespace ProjectBriefcaseExcelReport
                 }
                 catch (Exception ex)
                 {
-                    errorText += "Не удалось получить данные календаря, причина: " + ex.Message;
+                    ex.Message = "Не удалось получить данные календаря, причина: " + ex.Message;
                 }
         }
 
@@ -925,26 +911,24 @@ namespace ProjectBriefcaseExcelReport
             Settings.SQLVariables = new SQLVariablesClass();
             Settings.Variables = new VariablesClass();
             Settings.Variables.Refresh();
-            string errorText = "";
 
             using (var connection = Helpers.SugarSQLConnection.GetSQLConnection())
             {
                 Helpers.SugarSQLConnection.OpenInUsing(connection);
 
-                Settings.SQLVariables.GetSettings(connection, Settings.SettingsTypeCodeList, ref errorText);    //получаем настройки
+                Settings.SQLVariables.GetSettings(connection, Settings.SettingsTypeCodeList);    //получаем настройки
 
-                getProductionCalendar(dateStart, dateEnd, connection, ref errorText);  //получаем данные календаря
+                getProductionCalendar(dateStart, dateEnd, connection);  //получаем данные календаря
 
-                string fileShortNameNew = Settings.SQLVariables.NewFileNamePrefix + getPeriodName(true, ref errorText) + "." + Settings.FileExtention; //тут получаем название нового файла
+                string fileShortNameNew = Settings.SQLVariables.NewFileNamePrefix + getPeriodName(true) + "." + Settings.FileExtention; //тут получаем название нового файла
 
                 string fileFullNameNew = Settings.SQLVariables.FolderPath + fileShortNameNew;
 
                 string fileData = "";
 
-                Helpers.SugarFile.Copy(Settings.SQLVariables.FolderPath + Settings.SQLVariables.TemplateFileShortName, fileFullNameNew, ref errorText); //копируем файл
+                Helpers.SugarFile.Copy(Settings.SQLVariables.FolderPath + Settings.SQLVariables.TemplateFileShortName, fileFullNameNew); //копируем файл
 
-                if (errorText == "")  //основное действие
-                {
+
                     string productionCalendarIDStart = Settings.Variables.GetProductionCalendar(Settings.ProductionCalendarCodeStart, "ProductionCalendarID");
                     string productionCalendarIDEnd = Settings.Variables.GetProductionCalendar(Settings.ProductionCalendarCodeEnd, "ProductionCalendarID");
                     int startPeriodNumber = int.Parse(Settings.Variables.GetProductionCalendar(Settings.ProductionCalendarCodeStart, "PeriodNumber"));
@@ -975,15 +959,14 @@ namespace ProjectBriefcaseExcelReport
                     }
                     catch (Exception ex)
                     {
-                        errorText += "\nОшибка в файле. " + ex.Message;
+                        ex.Message = "\nОшибка в файле. " + ex.Message;
                     }
                     finally
                     {
                         excelPackage.Dispose();
                     }
 
-                    fileData = Helpers.SugarFile.GetK2Xml(fileFullNameNew, fileShortNameNew, "", ref errorText);
-                }
+                    fileData = Helpers.SugarFile.GetK2Xml(fileFullNameNew, fileShortNameNew);
 
                 string userMessage = Settings.Variables.UserMessage;
                 bool isGetErrorMessage = Helpers.Sugar.ConvertStringToBool(Settings.SQLVariables.IsGetErrorMessage);
@@ -992,9 +975,9 @@ namespace ProjectBriefcaseExcelReport
                 Settings.Variables = new VariablesClass();
                 connection.Close();
 
-                Helpers.SugarFile.DeleteIfExists(fileFullNameNew, "\nОшибка при удалении временного файла: ", ref errorText);
+                Helpers.SugarFile.DeleteIfExists(fileFullNameNew);
 
-                userMessage = Helpers.Sugar.GetUserMessageAndErrorText(userMessage, errorText, isGetErrorMessage);
+                userMessage = Helpers.Sugar.GetUserMessageAndErrorText(userMessage);
 
                 GC.Collect();
                 return new Helpers.ReturnClass() { FileData = fileData, UserMessage = userMessage };
